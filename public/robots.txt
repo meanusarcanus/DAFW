@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theodisius.com/sitemap.xml

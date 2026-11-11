@@ -1,0 +1,44 @@
+name: Auto-Update Antigravity Engineering Diary
+
+on:
+  schedule:
+    # Runs every 2 days at 08:00 UTC (every other day)
+    - cron: '0 8 */2 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-diary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Execute Antigravity Diary Updater
+        run: |
+          python3 scripts/update_antigravity_diary.py
+
+      - name: Install Dependencies & Build Site
+        run: |
+          npm ci || npm install
+          npm run build
+
+      - name: Commit & Push Updated Engineering Diary
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'auto(diary): update Antigravity engineering diary logs [skip ci]'
+          file_pattern: 'src/data/antigravityDiary.json dist/*'

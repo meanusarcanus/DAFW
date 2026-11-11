@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/profile/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teodoro Nadres - AI Engineer & Automation Specialist</title>
+    <link rel="icon" href="coderguy.ico" type="image/x-icon">
+    <meta name="description" content="AI Engineer, Automation Engineer, and OT Cybersecurity specialist with over two decades of experience bridging Operational Technology and Information Technology.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 3D Canvas Background Container -->
+    <div id="canvas-3d-container"></div>
+
+    <!-- 3D Gamified HUD Bar (Bruno Simon x Active Theory) -->
+    <div id="hud-bar" class="hud-bar">
+        <div class="hud-badge">⚪ <span id="hud-speed">0 KM/H</span></div>
+        <div class="hud-badge">🎳 <span id="hud-score">SCORE: 0</span></div>
+        <div class="hud-controls-hint">🎮 WASD / Arrows to Roll | SPACE to Bounce 🚀</div>
+        <button id="btn-3d-reset" class="hud-btn">↺ Reset Ball</button>
+        <button id="btn-toggle-mode" class="hud-btn hud-btn-accent" onclick="document.getElementById('canvas-3d-container').style.display = document.getElementById('canvas-3d-container').style.display === 'none' ? 'block' : 'none'">🌐 3D / 2D Mode</button>
+    </div>
+
+    <!-- Mobile Touch Joystick Controls - Faint Glassmorphic Cyber Directional D-Pad -->
+    <div id="mobile-touch-controls" class="mobile-touch-controls">
+        <button id="btn-3d-up" class="touch-btn" aria-label="Up">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <div class="touch-row">
+            <button id="btn-3d-left" class="touch-btn" aria-label="Left">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button id="btn-3d-down" class="touch-btn" aria-label="Down">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button id="btn-3d-right" class="touch-btn" aria-label="Right">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
+        <button id="btn-3d-jump" class="touch-btn touch-btn-jump">BOUNCE 🚀</button>
+    </div>
+
+    <!-- Interactive 3D Project Monolith Modal -->
+    <div id="3d-project-modal" class="modal-3d hidden">
+        <div class="modal-3d-content">
+            <button class="modal-3d-close" onclick="document.getElementById('3d-project-modal').classList.add('hidden')">&times;</button>
+            <h3 id="3d-modal-title" class="modal-3d-title">Project Title</h3>
+            <p id="3d-modal-desc" class="modal-3d-desc">Project details loading...</p>
+            <button class="btn btn-primary" onclick="document.getElementById('3d-project-modal').classList.add('hidden')">Close Telemetry</button>
+        </div>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="coderguy.jpg" alt="Teodoro Nadres" class="logo-image">
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-greeting">Hi, my name is</p>
+                <h1 class="hero-title">Teodoro Nadres.</h1>
+                <h2 class="hero-subtitle">I build AI-driven solutions.</h2>
+                <p class="hero-description">
+                    Visionary technologist with more than two decades of experience bridging Operational Technology (OT) and Information Technology, now pivoting to pioneer AI-driven solutions.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#listen" class="btn btn-secondary">Listen</a>
+                    <a href="#watch" class="btn btn-secondary">Watch</a>
+                    <a href="#infographic" class="btn btn-secondary">Infographic</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        My career has been defined by designing and deploying mission-critical systems—from industrial automation to enterprise software—with a relentless focus on efficiency, integration, and data intelligence.
+                    </p>
+                    <p>
+                        I specialize in AI development, automation systems, and cybersecurity, with certifications from IBM, Google, and EC-Council. My expertise spans from building AI workflows and chatbots to industrial control systems and SCADA security.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Some Things I've Built</h2>
+            
+            <!-- AI Development Projects -->
+            <div class="project-category">
+                <h3 class="category-title">AI Development</h3>
+                
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">PLC Real-time Analytics</h3>
+                        <div class="project-description">
+                            <p>
+                                Built a Data Logger which captures real-time data from a Siemens PLC to find trends, patterns, and insights that can inform decision-making. Run on Linux.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>OT Automation</li>
+                            <li>Vibe Coding</li>
+                            <li>Cursor</li>
+                            <li>Ubuntu</li>
+                            
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1NwID9SL25gTbOalAmL7JuXAXKwtRs4pg/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View PLC Analytics Data">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">AI Sales Lead Classification System</h3>
+                        <div class="project-description">
+                            <p>
+                                Built an AI workflow using n8n and Make for CyberMech Solutions Company to assist in classification and qualification of sales leads using AI models. This system streamlines the sales process by automatically categorizing and prioritizing potential clients.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>n8n</li>
+                            <li>Make</li>
+                            <li>AI Models</li>
+                            <li>Workflow Automation</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1cY_FjsBbLGc-KikjmljIHnFhGfT9UrB0/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View AI Lead Classifier">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">AI Research Agent</h3>
+                        <div class="project-description">
+                            <p>
+                                Created an AI agent and research tool using Relevance AI to aid company representatives in better preparation before prospect client meetings. This tool provides comprehensive research and insights to improve client engagement.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Relevance AI</li>
+                            <li>AI Agents</li>
+                            <li>Research Automation</li>
+                            <li>Client Intelligence</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1FDwO98Tax6ezYCbJVBzWqg8f_1EVfq4r/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View AI Research Agent">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">AI Website Chatbot</h3>
+                        <div class="project-description">
+                            <p>
+                                Developed an AI chatbot using Agentive software for CyberMech Solutions Company's website. This chatbot provides instant customer support and lead qualification through intelligent conversation.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Agentive</li>
+                            <li>AI Chatbot</li>
+                            <li>Customer Support</li>
+                            <li>Lead Qualification</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1vZdbXCuG_a-iDWRkOJaxhuhleEoKZivP/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View AI Website Chatbot">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation Systems Projects -->
+            <div class="project-category">
+                <h3 class="category-title">Automation Systems (OT/IT)</h3>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">Plant Information System</h3>
+                        <div class="project-description">
+                            <p>
+                                Full-Stack Programming of various web-based reports connected to Allen-Bradley PLC and Aveva (Wonderware) Intouch SCADA. The system downloads data to Microsoft Access database and publishes reports on the plant intranet using HTML, JavaScript, and ASP.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Allen-Bradley PLC</li>
+                            <li>SCADA</li>
+                            <li>HTML/CSS/JavaScript</li>
+                            <li>ASP</li>
+                            <li>Microsoft Access</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1t4a3GVH8YI3ot_EorpwQ1Pfvgt6tiZSK/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View Plant Information System">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">Industrial Control Systems</h3>
+                        <div class="project-description">
+                            <p>
+                                Ladder logic programming, SCADA scripting, and SQL configuration for manufacturing facility control systems using Allen-Bradley PLC5/80C, SLC5/04, ControlLogix, Aveva Intouch HMI, and InSQL Realtime Historian.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Ladder Logic</li>
+                            <li>SCADA Scripting</li>
+                            <li>SQL</li>
+                            <li>Allen-Bradley</li>
+                            <li>ControlLogix</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1cv0vzFkQk5QDdNg126vAUqGn0hX8cgOd/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View Industrial Control Systems">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <p class="project-overline">Featured Project</p>
+                        <h3 class="project-title">SMS Alarm System</h3>
+                        <div class="project-description">
+                            <p>
+                                Developed a Short Message Service (SMS) application using Visual Basic programming, AT commands, SQL queries, and Microsoft Access database to provide immediate warning and alarm notifications to maintenance teams.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Visual Basic</li>
+                            <li>AT Commands</li>
+                            <li>SQL</li>
+                            <li>Microsoft Access</li>
+                            <li>SMS Integration</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://drive.google.com/file/d/1M-KEab04j6d_dI3mGJ_ZyBoYDgOuD3iA/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="View SMS Alarm System">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Certifications</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>AI & Machine Learning</h3>
+                    <ul class="skill-list">
+                        <li>AI Workflows (n8n, Make)</li>
+                        <li>AI Agents & Chatbots</li>
+                        <li>Prompt Engineering</li>
+                        <li>Python for AI</li>
+                        <li>Flask Web Applications</li>
+                        <li>Generative AI</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Industrial Automation</h3>
+                    <ul class="skill-list">
+                        <li>Allen-Bradley PLC Programming</li>
+                        <li>SCADA Systems (Aveva Intouch)</li>
+                        <li>Ladder Logic</li>
+                        <li>SQL Database Management</li>
+                        <li>Industrial Networks</li>
+                        <li>System Integration</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Cybersecurity</h3>
+                    <ul class="skill-list">
+                        <li>ICS/SCADA Security</li>
+                        <li>Network Security</li>
+                        <li>Penetration Testing</li>
+                        <li>Vulnerability Assessment</li>
+                        <li>SIEM Tools</li>
+                        <li>Incident Response</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <ul class="skill-list">
+                        <li>HTML/CSS/JavaScript</li>
+                        <li>Python Flask</li>
+                        <li>ASP Classic</li>
+                        <li>Database Design</li>
+                        <li>API Development</li>
+                        <li>Responsive Design</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="certifications">
+                <h3>Professional Certifications</h3>
+                <div class="cert-grid">
+                    <div class="cert-item">
+                        <h4>IBM AI Developer Professional Certificate</h4>
+                        <p>Comprehensive AI development and software engineering certification</p>
+                        <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/Z4PFYONK5R03" target="_blank" rel="noopener noreferrer">Verify Certificate</a>
+                        <p></p>
+                        <a href="https://drive.google.com/file/d/1pAIWo8Dr1zKj0ji_vWDmOu2CjC3havFx/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Lab - AI Development</a>
+                    </div>
+                    <div class="cert-item">
+                        <h4>Google Cybersecurity Professional Certificate</h4>
+                        <p>Entry-level cybersecurity with Python, Linux, SQL, and SIEM tools</p>
+                        <a href="https://coursera.org/verify/professional-cert/XSUI8TOQSEMU" target="_blank" rel="noopener noreferrer">Verify Certificate</a>
+                        <p></p>
+                        <a href="https://drive.google.com/file/d/1NU8pkZNrBC-51GsouNlZ3IP5sUH7WeIC/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Lab - Wireshark</a>
+
+                    </div>
+                    <div class="cert-item">
+                        <h4>EC-Council ICS/SCADA Cybersecurity</h4>
+                        <p>Hands-on training in industrial control systems security</p>
+                        <a href="https://drive.google.com/file/d/1h3Kwh8Z089TRkQJt5Xycs2GFr7z0zmwJ/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Verify Certificate</a>
+                        <p></p>
+                        <a href="https://drive.google.com/file/d/14nt3jxYklbVwfg3Vzgiq9Gd-u9-c-ouC/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Lab - Footprinting</a>
+
+                    </div>
+                    <div class="cert-item">
+                        <h4>Google Cloud Engineer Specialization</h4>
+                        <p>Cloud infrastructure and Kubernetes engineering</p>
+                        <a href="https://coursera.org/verify/professional-cert/Y6WC66VELHAT" target="_blank" rel="noopener noreferrer">Verify Certificate</a>
+                    </div>
+                    <div class="cert-item">
+                        <h4>Google IT Support</h4>
+                        <p>Technical Support, Networking, Operating Systems, IT Infrastructure Services, IT Security</p>
+                        <a href="https://coursera.org/verify/professional-cert/07N5DAA0VH7Y" target="_blank" rel="noopener noreferrer">Verify Certificate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listen Section -->
+    <section id="listen" class="contact">
+        <div class="container">
+            <h2 class="section-title">Listen</h2>
+            <p class="contact-text">
+                Maybe you are driving ... Just relax and listen to the pitch.
+            </p>
+            
+            <div class="contact-cta">
+                <a href="https://drive.google.com/file/d/1x4GofrWaNymJ83z__amZ2efHTAlyy0dB/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Deep Dive</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Watch Section -->
+    <section id="watch" class="contact">
+        <div class="container">
+            <h2 class="section-title">Watch</h2>
+            <p class="contact-text">
+                Watch the presentation ...
+            </p>
+            
+            <div class="contact-cta">
+                <a href="https://drive.google.com/file/d/1hHT9ZNfFTfIun8CMUDRUzdGJuHLjERge/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Technologist's Journey </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Infographic Section -->
+    <section id="infographic" class="contact">
+        <div class="container">
+            <h2 class="section-title">Infographic</h2>
+            <p class="contact-text">
+                Information graphical representation ...
+            </p>
+            
+            <div class="contact-cta">
+                <a href="https://drive.google.com/file/d/1dD0Tx077v_e6nT8hZ0HbfLhQh-ILYaBk/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">The Bridge Between Industrial OT and AI Innovation </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="contact-text">
+                I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            </p>
+            
+            <div class="contact-cta">
+                <a href="mailto:tednadres@gmail.com?subject=Portfolio Inquiry&body=Hi Teodoro,%0D%0A%0D%0AI'd like to connect with you regarding your work.%0D%0A%0D%0ABest regards," class="btn btn-primary">Send Me an Email</a>
+            </div>
+
+            <div class="contact-links">
+                <a href="mailto:tednadres@gmail.com" class="contact-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    tednadres@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/tednadres" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Teodoro Nadres. Built with ❤️</p>
+        </div>
+    </footer>
+
+    <script src="three.min.js"></script>
+    <script src="cannon.min.js"></script>
+    <script src="script.js"></script>
+    <script src="profile_3d_engine.js"></script>
+</body>
+</html> 

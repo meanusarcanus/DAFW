@@ -1,0 +1,477 @@
+/* Original Profile CSS + 3D Physics HUD & Transparent Glassmorphism */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --dark-primary: #080c14;
+    --dark-secondary: rgba(15, 23, 42, 0.55);
+    --dark-card: rgba(19, 30, 54, 0.55);
+    --accent-teal: #06b6d4;
+    --accent-green: #00ffa3;
+    --accent-purple: #a855f7;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: rgba(6, 182, 212, 0.25);
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Force All SVG icons to clean 18px x 18px dimensions (prevents giant purple arrows) */
+svg {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.project-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    transition: var(--transition);
+}
+
+.project-links a:hover {
+    background: rgba(0, 255, 163, 0.25);
+    border-color: var(--accent-green);
+    transform: translateY(-3px) scale(1.1);
+}
+
+.project-links a svg,
+.contact-links a svg {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    stroke: var(--accent-green);
+    opacity: 0.9;
+    transition: var(--transition);
+}
+
+/* 3D Canvas Background Container */
+#canvas-3d-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Futuristic Floating HUD Bar */
+.hud-bar {
+    position: fixed;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(8, 12, 20, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(6, 182, 212, 0.2);
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.hud-badge {
+    padding: 4px 12px;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    border-radius: 20px;
+    color: var(--accent-green);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.hud-controls-hint {
+    color: var(--text-secondary);
+    font-size: 11px;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hud-controls-hint {
+        display: block;
+    }
+}
+
+.hud-btn {
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.hud-btn:hover {
+    background: rgba(6, 182, 212, 0.3);
+    border-color: var(--accent-teal);
+    color: var(--accent-green);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.hud-btn-accent {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(168, 85, 247, 0.3));
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+/* Mobile Virtual Joystick Controls - Compact & Transparent to reveal 3D Canvas */
+.mobile-touch-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.35;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mobile-touch-controls:hover,
+.mobile-touch-controls:active,
+.mobile-touch-controls:focus-within {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.touch-row {
+    display: flex;
+    gap: 6px;
+}
+
+.touch-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(6, 182, 212, 0.35);
+    color: var(--accent-green);
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    touch-action: manipulation;
+    transition: var(--transition);
+}
+
+.touch-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    stroke: var(--accent-green);
+}
+
+.touch-btn:active {
+    background: var(--accent-teal);
+    color: var(--dark-primary);
+    transform: scale(0.92);
+}
+
+.touch-btn-jump {
+    width: 80px;
+    height: 28px;
+    border-radius: 14px;
+    font-size: 10px;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(168, 85, 247, 0.5));
+    color: #ffffff;
+    border: 1px solid rgba(0, 255, 163, 0.4);
+}
+
+/* 3D Project Monolith Modal */
+.modal-3d {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    background: rgba(8, 12, 20, 0.85);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-3d.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-3d-content {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(0, 255, 163, 0.4);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 163, 0.2);
+    text-align: center;
+    animation: modalPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+    0% { transform: scale(0.7) translateY(30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.modal-3d-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.modal-3d-close:hover {
+    color: var(--accent-green);
+}
+
+.modal-3d-title {
+    font-size: 22px;
+    color: var(--accent-green);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.modal-3d-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* Container & Glassmorphism Transparent Cards */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(8, 12, 20, 0.65);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-teal);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--accent-teal);
+    transform: translateY(-2px);
+}
+
+/* Buttons & Elastic Micro-Interactions */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--accent-teal);
+    color: var(--dark-primary);
+    border: 2px solid var(--accent-teal);
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--accent-teal);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--accent-teal);
+    border: 2px solid var(--accent-teal);
+}
+
+.btn-secondary:hover {
+    background: var(--accent-teal);
+    color: var(--dark-primary);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+}
+
+.hero {
+    min-height: 100vh;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-greeting {
+    color: var(--accent-teal);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.hero-description {
+    max-width: 600px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Semi-Transparent Glassmorphism Cards so 3D Bouncing Animation Behind is 100% Visible */
+section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--accent-teal);
+    border-radius: 2px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(12px);
+    border-radius: var(--border-radius);
+    padding: 1.8rem;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--accent-teal);
+    box-shadow: 0 15px 35px rgba(6, 182, 212, 0.25);
+    background: rgba(15, 23, 42, 0.75);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-category {
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
